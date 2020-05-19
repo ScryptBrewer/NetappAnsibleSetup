@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+  collections:
+    - netapp.ontap
+  vars:
+    netapp_hostname: 
+      - "cluster1"
+    netapp_username: "admin"
+ 
+  tasks:
+  - name: Install required Python Modules
+    pip:
+      name:
+      - netapp-lib
+      - solidfire-sdk-python
+      - xmltodict
+
+  - name: Setup Collections for ontap
+    command:
+      cmd: "ansible-galaxy install -f {{ item }}"
+    with_items:
+      - "netapp.ontap"
+      - "netapp.aws"
+      - "netapp.azure"
+      - "netapp.elementsw"
+      - "netapp.ontap"
+      - "netapp.um_info"
+
+  - name: Modify web services for Ansible
+    command: 
+      cmd: ssh -o "StrictHostKeyChecking no" {{ netapp_username }}@{{ item }} "set -priv advanced; system services web modify -http-enabled true"
+    with_items: "{{ netapp_hosts }}"
+
