@@ -5,7 +5,7 @@
   collections:
     - netapp.ontap
   vars:
-    netapp_hostname: 
+    netapp_hosts: 
       - "cluster1"
     netapp_username: "admin"
  
