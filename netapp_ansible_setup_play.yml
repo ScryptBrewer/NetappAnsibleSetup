@@ -19,7 +19,7 @@
 
   - name: Setup Collections for ontap
     command:
-      cmd: "ansible-galaxy install -f {{ item }}"
+      cmd: "ansible-galaxy collection install -f {{ item }}"
     with_items:
       - "netapp.ontap"
       - "netapp.aws"
