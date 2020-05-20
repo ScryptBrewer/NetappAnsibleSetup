@@ -7,10 +7,14 @@ To complete a base setup of the collections modules and required storage and pyt
 to use:
 git clone https://github.com/ScryptBrewer/NetappAnsibleSetup.git
 
-ansible-playbook netapp_ansible_setup_play.yml --extra-vars="netapp_user=admin,netapp_password=Secret1,netapp_hosts=10.10.10.1"
+ansible-playbook netapp_ansible_setup_play.yml --extra-vars="netapp_hosts=[10.10.10.1]"
 
 To test after setting up collections use
+update the aggrinfo_test_play.yml 
+  netapp_user: "admin"
+  netapp_password: "Secret1"
+  netapp_hosts: "10.10.10.1"
 
-ansible-playbook aggrinfo_test_play.yml --extra-vars="netapp_user=admin,netapp_password=Secret1,netapp_hosts=10.10.10.1"
+ansible-playbook aggrinfo_test_play.yml 
 
 
