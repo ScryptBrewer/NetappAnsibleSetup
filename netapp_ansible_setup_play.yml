@@ -16,6 +16,7 @@
       - netapp-lib
       - solidfire-sdk-python
       - xmltodict
+      - requests
 
   - name: Setup Collections for ontap
     command:
