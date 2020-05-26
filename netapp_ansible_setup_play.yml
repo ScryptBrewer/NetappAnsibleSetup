@@ -30,7 +30,7 @@
       - "netapp.um_info"
 
   - name: Modify web services for Ansible
+    tags: ["setup_ontap"]
     command: 
       cmd: ssh -o "StrictHostKeyChecking no" {{ netapp_username }}@{{ item }} "set -priv advanced; system services web modify -http-enabled true"
     with_items: "{{ netapp_hosts }}"
-
