@@ -1,5 +1,5 @@
 # netapp_ansible_setup
-Use to install required settings and validate configuration using collections with NetApp collections modules. The netapp_ansible_setup_play.yml may be modified to include mulitple clusters to accept ansible commands. The ssh process requires that you provide the admin password while the command is running. 
+Use to install required settings and validate configuration using collections with NetApp collections modules. The netapp_ansible_setup_play.yml may be modified to include mulitple clusters to accept ansible commands. The ssh process requires that you provide the admin password while the play is running. 
 
 Once the setup has been executed you can use the aggrinfo_test_play.yml to test to see if ansible is able to gather facts from the NetApp cluster. 
 
