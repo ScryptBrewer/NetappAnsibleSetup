@@ -9,6 +9,7 @@
     netapp_username: "admin"
     netapp_password: "PaSSw@ord"
 
+    # No modifications below this point should be required for validation. 
     opt_info_gather_subset_01: "aggregate_info"
     login: &login
       hostname: "{{ netapp_hostname }}"
