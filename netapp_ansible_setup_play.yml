@@ -1,13 +1,25 @@
 ---
 - hosts: localhost
   gather_facts: false
-
   collections:
     - netapp.ontap
+
   vars:
     netapp_hosts: 
       - "cluster1"
+      - "cluster2"
     netapp_username: "admin"
+    netapp_password: "Secretpwd123"
+# UnComment the line below and setup a 32 Char passPhrase for onboard disk encryption
+#    disk_passphrase: "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKL"
+
+  # No Modification below this point should be required
+    login: &login
+      username: "{{ netapp_username }}"
+      password: "{{ netapp_password }}"
+      https: "true"
+      validate_certs: "false"
+      hostname: "{{ item }}"
  
   tasks:
   - name: Install required Python Modules
@@ -26,11 +38,22 @@
       - "netapp.aws"
       - "netapp.azure"
       - "netapp.elementsw"
-      - "netapp.ontap"
       - "netapp.um_info"
 
   - name: Modify web services for Ansible
     tags: ["setup_ontap"]
     command: 
       cmd: ssh -o "StrictHostKeyChecking no" {{ netapp_username }}@{{ item }} "set -priv advanced; system services web modify -http-enabled true"
+    with_items: "{{ netapp_hosts }}"
+
+  - name: use ZAPIT to enable onboard encryption
+    tags: ["setup_ontap","encryption"]
+    na_ontap_zapit:
+      <<: *login
+      zapi:
+        security-key-manager-setup:
+          onboard-passphrase: "{{ disk_passphrase }}"
+    ignore_errors: true
+    register: ontap
+    when: disk_passphrase is defined
     with_items: "{{ netapp_hosts }}"
