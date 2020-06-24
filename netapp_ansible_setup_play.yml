@@ -45,7 +45,7 @@
     command: 
       cmd: ssh -o "StrictHostKeyChecking no" {{ netapp_username }}@{{ item }} "set -priv advanced; system services web modify -http-enabled true"
     with_items: "{{ netapp_hosts }}"
-
+ 
   - name: use ZAPIT to enable onboard encryption
     tags: ["setup_ontap","encryption"]
     na_ontap_zapit:
@@ -53,7 +53,7 @@
       zapi:
         security-key-manager-setup:
           onboard-passphrase: "{{ disk_passphrase }}"
-    ignore_errors: true
+        ignore_errors: true
     register: ontap
     when: disk_passphrase is defined
     with_items: "{{ netapp_hosts }}"
